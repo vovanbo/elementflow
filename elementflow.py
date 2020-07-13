@@ -41,16 +41,16 @@ def escape(value: str) -> str:
     return value.replace('&', '&amp;').replace('<', '&lt;')
 
 
-def quoteattr(value: str) -> str:
+def quote_value(value: str) -> str:
     if '&' in value or '<' in value or '"' in value:
         value = value.replace('&', '&amp;').replace('<', '&lt;').replace('"', '&quot;')
     return f'"{value}"'
 
 
-def attr_str(attrs: Optional[Dict[str, str]] = None) -> str:
+def convert_attrs_to_string(attrs: Optional[Dict[str, str]] = None) -> str:
     if not attrs:
         return ''
-    return ''.join(f' {k}={quoteattr(v)}' for k, v in attrs.items())
+    return ''.join(f' {k}={quote_value(v)}' for k, v in attrs.items())
 
 
 class XMLGenerator:
@@ -86,7 +86,7 @@ class XMLGenerator:
         Opens a new element containing sub-elements and text nodes.
         Intends to be used under ``with`` statement.
         """
-        self.file.write(f'<{name}{attr_str(attrs)}>')
+        self.file.write(f'<{name}{convert_attrs_to_string(attrs)}>')
         self.stack.append(name)
         return self
 
@@ -95,9 +95,9 @@ class XMLGenerator:
         Generates a single element, either empty or with a text contents.
         """
         if text:
-            self.file.write(f'<{name}{attr_str(attrs)}>{escape(text)}</{name}>')
+            self.file.write(f'<{name}{convert_attrs_to_string(attrs)}>{escape(text)}</{name}>')
         else:
-            self.file.write(f'<{name}{attr_str(attrs)}/>')
+            self.file.write(f'<{name}{convert_attrs_to_string(attrs)}/>')
 
     def text(self, value: str) -> None:
         """
