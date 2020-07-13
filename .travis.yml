@@ -3,6 +3,6 @@ python:
   - 3.7
   - 3.8
 install:
-  - "pip install -e .[test] --use-mirrors"
+  - "pip install -e .[test]"
 script:
   - pytest tests.py
