@@ -20,11 +20,11 @@ Basic XML generation:
 import elementflow
 file = open('text.xml', 'w') # can be any  object with .write() method
 
-with elementflow.xml(file, u'root') as xml:
-    xml.element(u'item', attrs={u'key': u'value'}, text=u'text')
-    with xml.container(u'container', attrs={u'key': u'value'}):
-        xml.text(u'text')
-        xml.element(u'subelement', text=u'subelement text')
+with elementflow.xml(file, 'root') as xml:
+    xml.element('item', attrs={'key': 'value'}, text='text')
+    with xml.container('container', attrs={'key': 'value'}):
+        xml.text('text')
+        xml.element('subelement', text='subelement text')
 ```
 
 Using `with` is required to properly close container elements. The library
@@ -35,9 +35,12 @@ them automatically).
 XML with namespaces:
 
 ```python
+import elementflow
+file = open('text.xml', 'w') # can be any  object with .write() method
+
 with elementflow.xml(file, 'root', namespaces={'': 'urn:n', 'n1': 'urn:n1'}) as xml:
     xml.element('item')
-    with xml.container('container', namespaces={'n2': 'urn:n2'):
+    with xml.container('container', namespaces={'n2': 'urn:n2'}):
         xml.element('n1:subelement')
         xml.element('n2:subelement')
 ```
@@ -49,7 +52,7 @@ prefixes that wasn't defined beforehand and will raise ValueError in that case.
 Pretty-printing is also supported:
 
 ```python
-with elementflow.xml(file, 'root', indent=True):
+with elementflow.xml(file, 'root', indent=2):
     # ...
 ```
 
