@@ -1,8 +1,9 @@
 # -*- coding:utf-8 -*-
 from datetime import datetime
+from typing import IO
 
 
-def ef_generator(file, count):
+def ef_generator(file: IO, count: int) -> None:
     import elementflow
 
     with elementflow.xml(file, 'contacts') as xml:
@@ -15,7 +16,7 @@ def ef_generator(file, count):
                     xml.element('phone', {'type': 'home'}, text='123456')
 
 
-def et_generator(file, count):
+def et_generator(file: IO, count: int) -> None:
     import xml.etree.cElementTree as ET
 
     root = ET.Element('contacts')
@@ -29,7 +30,7 @@ def et_generator(file, count):
     ET.ElementTree(root).write(file, encoding='utf-8')
 
 
-def lxml_generator(file, count):
+def lxml_generator(file: IO, count: int) -> None:
     from lxml import etree
 
     root = etree.Element('contacts')
