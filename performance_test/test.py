@@ -45,10 +45,8 @@ def lxml_generator(file: IO, count: int) -> None:
 
 
 if __name__ == '__main__':
-    start = datetime.now()
-    ef_generator(open('/dev/null', 'wb'), 40000)
-    print(datetime.now() - start)
-    et_generator(open('/dev/null', 'wb'), 40000)
-    print(datetime.now() - start)
-    lxml_generator(open('/dev/null', 'wb'), 40000)
-    print(datetime.now() - start)
+    count = 100000
+    for method in (ef_generator, et_generator, lxml_generator):
+        start = datetime.now()
+        method(open('/dev/null', 'wb'), count)
+        print(datetime.now() - start)
