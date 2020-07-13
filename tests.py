@@ -1,7 +1,6 @@
 # -*- coding:utf-8 -*-
 from __future__ import with_statement
 
-import unittest
 from io import BytesIO
 import xml.etree.cElementTree as ET
 
